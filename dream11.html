@@ -2,87 +2,149 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style type="text/css">
+	 .btn{
+	   margin: 10px 15px;
+	   height: 10%;
+	   width: 20%;
+	   font-size: 1.2em;
+	   box-shadow: 0 5px 2px rgb(0,0,0,0.5);
+	 }
+	 p{
+	   font-size: 1.5em;
+	   transition: color 5s ease-in-out;
+	   text-shadow: 0 7px 5px rgb(0,0,0,0.5);
+	 }	
+	</style>
 	<title></title>
 </head>
 <body>
-	<p>Score</p>
-	<p id = "score"> 0 / 0</p>
-	<button id = "wick" onclick="wick()">w</button>
-	<button id = "Wd" onclick="Wd()">Wd</button>
-	<button id = "Nb" onclick="NbW()">NB + W</button><br>
-	<button onclick="Four()">4</button>
-	<button onclick="Six()">6</button>
-	<button onclick="Three()">3</button>
-	<button onclick="Two()">2</button>
-	<button onclick="One()">1</button>
-	<button onclick="Zero()">0</button><br><br>
+	<p class = "scr">Score</p>
+	<p class = "scr" id = "score"> 0 / 0</p>
+	<button class = "btn" id = "wick" onclick="wick()">Wick</button>
+	<button class = "btn" id = "Wd" onclick="Wd()">Wd</button>
+	<button class = "btn" id = "Nb" onclick="NbW()">NB+W</button><br>
+	<button class = "btn" onclick="Four()">4</button>
+	<button class = "btn" onclick="Six()">6</button>
+	<button class = "btn" onclick="Three()">3</button>
+	<button class = "btn" onclick="Two()">2</button>
+	<button class = "btn" onclick="One()">1</button>
+	<button class = "btn" onclick="Zero()">0</button><br><br>
 	<input class = "batters" type="text">
 	<ul class="names">
-		<li></li>
 	</ul>
+	<input type="" name="">
 	<button class="addList">Greet</button>
 
 
 	<script type="text/javascript">
-		let W = 0 , S = 0 , balls = 0;
-		
-		const inp = document.querySelector(".batters");
-		// const put = document.getElementById("btrs").value;
-		const names = document.querySelector(".names");
-		const ad     = document.querySelector(".addList");
-		ad.addEventListener('click' , function(){
-			const newLi = document.createElement()
-		})
+		let W = 0 , S = 0 , balls = 0 , striker = 0 , nonstriker = 0 , strikerBalls = 0;
+		let pc = 1;
+
+		// query();
+		console.log("global" + pc);
+
+		function display(){
+		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6 + "<br>";
+		    let str = ".strike" + (pc-1);
+		    console.log(str);
+		    let select = document.querySelector(str);
+		    select.innerHTML = " Runs " + striker + " overs " + parseInt(strikerBalls / 6) + "." + strikerBalls%6 + "balls";
+
+
+		}
+		function query1(){
+
+		}
+		function query(){
+			const inp = document.querySelector(".batters");
+			// const put = document.getElementById("btrs").value;
+			const names = document.querySelector(".names");
+			const ad     = document.querySelector(".addList");
+			ad.addEventListener('click' , function(){
+				const newLi = document.createElement("P");
+				const newScore = document.createElement("P");
+				const txt = document.createTextNode(inp.value);
+				newLi.appendChild(txt);
+				names.appendChild(newLi);
+				names.appendChild(newScore);
+				if(pc > 2){
+					striker = 0;
+					strikerBalls = 0;
+				}
+				let classname = "strike" + pc;
+				newScore.classList.add(classname);
+				console.log(newScore);
+				pc++;
+			});
+		}
 		function wick(){
 			W++;
 			balls++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			display();
 
 		}
 		function Wd(){
 			S++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			display();
+
 
 		}
 		function NbW(){
 			W++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			display();
 
 		}
 		function One(){
 			S++;
 			balls++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			striker++;
+			strikerBalls++;
+			display();
 
 		}
 		function Two(){
 			S += 2;
+			striker+=2;
+			strikerBalls++;
 			balls++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			display();
+
 
 		}
 		function Three(){
 			S += 3;
 			balls++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			striker+=3;
+			strikerBalls++;
+			display();
+
 
 		}
 		function Four(){
 			S += 4;
 			balls++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			striker+=4;
+			strikerBalls++;
+			display();
+
 
 		}
 		function Six(){
 			S += 6;
+			striker+=6;
+			strikerBalls++;
 			balls++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			display();
+
 
 		}		
 		function Zero(){
 			S += 0;
+			striker+=0;
+			strikerBalls++;
 			balls++;
-		    document.getElementById('score').innerHTML = S + " / " + W + " <br> "+ "Over " + parseInt(balls / 6) + " balls " + balls % 6;
+			display();
 
 		}
 
